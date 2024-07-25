@@ -81,3 +81,82 @@ Using `strace` can be extremely powerful for tracing system calls and signals on
     This adds timestamps to each line of output in `output.txt`.
 
 These examples should cover a wide range of scenarios from basic tracing of a single process to more complex scenarios involving child processes, specific system calls, signals, and detailed output options. Adjust the options based on your specific needs and the complexity of the tracing task at hand.
+
+
+Certainly! Let's explore some more advanced `strace` commands with practical examples:
+
+### More Useful and Advanced `strace` Commands:
+
+1. **Trace only successful system calls (`-z success` option):**
+   ```bash
+   strace -e trace=open,read,write -z success command
+   ```
+   This traces only successful `open`, `read`, and `write` system calls made by `command`.
+
+2. **Display relative timestamps (`-r` option):**
+   ```bash
+   strace -r command
+   ```
+   This shows relative timestamps for each system call relative to the start of `command`.
+
+3. **Display statistics at the end (`-c` option):**
+   ```bash
+   strace -c command
+   ```
+   This displays a summary of time and call counts for each system call made by `command` upon completion.
+
+4. **Trace specific file accesses (using file descriptor):**
+   ```bash
+   strace -e trace=desc -e verbose=file command
+   ```
+   This traces all file descriptor operations (`desc`) and provides verbose information on file accesses.
+
+5. **Trace only specific process threads (`-p PID -f` option):**
+   ```bash
+   strace -fp <pid> command
+   ```
+   This traces only the main thread of the process specified by `<pid>`, along with any child threads (`-f` option).
+
+6. **Filter output by process ID (`-e trace=process` option):**
+   ```bash
+   strace -e trace=process command
+   ```
+   This traces process-related events such as `fork`, `execve`, and `exit`.
+
+7. **Trace across a time range (`-t -T -r` options):**
+   ```bash
+   strace -t -T -r -o output.txt command
+   ```
+   This combines options to trace with timestamps (`-t`), time spent in each call (`-T`), relative timestamps (`-r`), and outputs to `output.txt`.
+
+8. **Trace system calls made by a specific user (`-u username` option):**
+   ```bash
+   strace -u username command
+   ```
+   This traces system calls made by a specific user.
+
+9. **Trace and output in hexadecimal format (`-xx` option):**
+   ```bash
+   strace -xx -o output.txt command
+   ```
+   This outputs all data in hexadecimal format in `output.txt`.
+
+10. **Trace and follow forks and threads (`-ff` option):**
+    ```bash
+    strace -ff -o output.txt command
+    ```
+    This traces a process and all its children and threads, saving output to `output.txt`.
+
+11. **Trace network related system calls (`-e trace=network` option):**
+    ```bash
+    strace -e trace=network command
+    ```
+    This traces network-related system calls such as `socket`, `connect`, `send`, and `recv`.
+
+12. **Trace signals and their actions (`-e trace=signal` option):**
+    ```bash
+    strace -e trace=signal command
+    ```
+    This traces signals and their actions like `kill`, `sigaction`, and `sigprocmask`.
+
+These advanced `strace` commands provide deeper insight into system behavior, allowing for detailed analysis of system calls, signals, file accesses, and more. Choose and adapt these commands based on your specific debugging or analysis requirements.
